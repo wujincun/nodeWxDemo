@@ -1,5 +1,6 @@
 'use strict'
 var Koa = require('koa');
+const xmlParser = require('koa-xml-body')
 var Wechat = require('./wechat/g');
 var util = require('./libs/util');
 var path = require('path');
@@ -20,6 +21,7 @@ var config = {
 	}
 }
 var app = new Koa();
+app.use(xmlParser());
 app.use(Wechat(config.wechat));
 app.listen(80);
 console.log('app started at port 80');

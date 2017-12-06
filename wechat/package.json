@@ -12,6 +12,7 @@
 	"dependencies": {
 		"bluebird": "^3.5.1",
 		"koa": "^2.4.1",
+		"koa-xml-body": "^2.0.0",
 		"request": "^2.83.0",
 		"sha1": "^1.1.1"
 	},
