@@ -1,0 +1,19 @@
+{
+	"name": "wechat",
+	"version": "1.0.0",
+	"description": "",
+	"main": "app.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node --harmony app.js"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"bluebird": "^3.5.1",
+		"koa": "^2.4.1",
+		"request": "^2.83.0",
+		"sha1": "^1.1.1"
+	},
+	"devDependencies": {}
+}
