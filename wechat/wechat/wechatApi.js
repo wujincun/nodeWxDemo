@@ -1,12 +1,13 @@
 'use strict'
 var Promise = require('bluebird');
-var request = Promise.promisify(require('request'))
+var request = Promise.promisify(require('request'));
+var util = require('./util');
 var prefix = 'https://api.weixin.qq.com/cgi-bin/';
 var api = {
 		accessToken: prefix + 'token?grant_type=client_credential'
 	}
 	/*管理和微信交互的接口和票据的更新，存储*/
-function WechatApi(opts) {
+function Wechat(opts) {
 	var that = this;
 	this.appID = opts.appID;
 	this.appSecret = opts.appSecret;
@@ -31,7 +32,7 @@ function WechatApi(opts) {
 			that.saveAccessToken(data)
 		})
 }
-WechatApi.prototype.isValidAccessToken = function(data) {
+Wechat.prototype.isValidAccessToken = function(data) {
 	if (!data || !data.access_token || !data.expires_in) {
 		return false
 	}
@@ -40,7 +41,7 @@ WechatApi.prototype.isValidAccessToken = function(data) {
 	var now = Date.now();
 	return (now < expires_in) ? true : false;
 }
-WechatApi.prototype.updateAccessToken = function() {
+Wechat.prototype.updateAccessToken = function() {
 	var appID = this.appID;
 	var appSecret = this.appSecret;
 	var url = api.accessToken + '&appid=' + appID + '&secret=' + appSecret;
@@ -57,4 +58,15 @@ WechatApi.prototype.updateAccessToken = function() {
 		})
 	})
 }
-module.exports = WechatApi;
+Wechat.prototype.reply = function(ctx) {
+	var message = ctx.weixin;
+	var response = ctx.response;
+	var content = response.body;
+	var xml = util.tpl(content, message);
+	console.log(xml)
+	response.status = 200;
+	response.type = 'application/xml';
+	response.body = xml; //跑通，但是公号里未显示
+	return
+}
+module.exports = Wechat;

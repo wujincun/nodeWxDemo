@@ -1,13 +1,12 @@
 'use strict'
 var sha1 = require('sha1');
 var WechatApi = require('./wechatApi.js');
-var getRawBody = require("raw-body");
+var util = require('./util.js');
 
 /*这个中间件是处理事件，推送数据等，用来返回信息*/
-module.exports = function(opts) {
-	//var Wechat = new WechatApi(opts);
+module.exports = function(opts, handler) {
+	var Wechat = new WechatApi(opts);
 	return async(ctx, next) => {
-		//await next(); //什么意思,指Wechat？
 		var query = ctx.request.query;
 		var method = ctx.request.method;
 		var response = ctx.response;
@@ -30,8 +29,20 @@ module.exports = function(opts) {
 				response.body = 'wrong'
 				return false
 			}
-			console.log(ctx.request.body.xml)
-			response.body = 'post'
+			var message = util.formatMessage(ctx.request.body.xml)
+				/*if (message.MsgType === 'event') {
+					if (message.Event === 'subscribe') {
+						var now = Date.now();
+						response.status = 200;
+						response.type = 'application/xml';
+						response.body = xml;
+						console.log(response);
+						return
+					}
+				}*/
+			ctx.weixin = message;
+			await handler(ctx, next);
+			Wechat.reply(ctx);
 		}
 	}
 }
