@@ -5,22 +5,22 @@ var tpl = heredoc(function() {
 	/*
 		<xml> 
 		<ToUserName><![CDATA[<%= toUserName %>]]></ToUserName> 
-		<FromUserName><![CDATA[ <%= fromUserName %> ]]></FromUserName> 
-		<CreateTime> <%= creatTime %> </CreateTime> 
+		<FromUserName><![CDATA[<%= fromUserName %>]]></FromUserName> 
+		<CreateTime><%= creatTime %></CreateTime> 
 		<MsgType><![CDATA[<%= msgType %>]]></MsgType> 
 		<% if (msgType === 'text'){ %>
 			<Content><![CDATA[<%= content %>]]></Content> 
 		<%}else if (msgType === 'image'){%>
 			<Image>
-				<MediaId><![CDATA[<%= content.media_id %>]]></MediaId>
+				<MediaId><![CDATA[<%= content.mediaId %>]]></MediaId>
 			</Image>
 		<%}else if (msgType === 'voice'){%>
 			<Voice>
-				<MediaId><![CDATA[<%= content.media_id %>]]></MediaId>
+				<MediaId><![CDATA[<%= content.mediaId %>]]></MediaId>
 			</Voice>
 		<%}else if (msgType === 'video'){%>
 			<Video>
-				<MediaId><![CDATA[<%= content.media_id %>]]></MediaId>
+				<MediaId><![CDATA[<%= content.mediaId %>]]></MediaId>
 				<Title><![CDATA[<%= content.title %>]]></Title>
 				<Description><![CDATA[<%= content.description %>]]></Description>
 			</Video> 
@@ -30,7 +30,7 @@ var tpl = heredoc(function() {
 				<Description><![CDATA[<%= content.description %>]]></Description>
 				<MusicUrl><![CDATA[<%= content.musicUrl %>]]></MusicUrl>
 				<HQMusicUrl><![CDATA[<%= content.hqMusicUrl %>]]></HQMusicUrl>
-				<ThumbMediaId><![CDATA[<%= content.media_id %>]]></ThumbMediaId>
+	<ThumbMediaId><![CDATA[<%= content.thumbMediaId %>]]></ThumbMediaId>
 			</Music>
 
 		<%}else if (msgType === 'news'){%>
