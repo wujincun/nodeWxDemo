@@ -5,7 +5,7 @@ var util = require('./util.js');
 
 /*这个中间件是处理事件，推送数据等，用来返回信息*/
 module.exports = function(opts, handler) {
-	var Wechat = new WechatApi(opts);
+	var wechatApi = new WechatApi(opts);
 	return async(ctx, next) => {
 		var query = ctx.request.query;
 		var method = ctx.request.method;
@@ -42,7 +42,7 @@ module.exports = function(opts, handler) {
 				}*/
 			ctx.weixin = message;
 			await handler(ctx, next);
-			Wechat.reply(ctx);
+			wechatApi.reply(ctx);
 		}
 	}
 }
