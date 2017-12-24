@@ -1,4 +1,5 @@
 'use strict'
+
 var Koa = require('koa');
 const xmlParser = require('koa-xml-body')
 var Wechat = require('./wechat/g');
